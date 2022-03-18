@@ -1,15 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
-// Add services to the container.
+services.AddFluentEmail("localhost@kamaverification")
+    .AddSmtpSender("localhost", 25);
 
-builder.Services.AddControllers();
+services.AddControllers();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
