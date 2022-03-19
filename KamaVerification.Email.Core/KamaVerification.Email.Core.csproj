@@ -11,4 +11,10 @@
     <PackageReference Include="FluentEmail.Smtp" Version="3.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\KamaVerification.Email.Data\KamaVerification.Email.Data.csproj" />
+    <ProjectReference Include="..\KamaVerification.Email.Services\KamaVerification.Email.Services.csproj" />
+    <ProjectReference Include="..\KamaVerification.Services\KamaVerification.Services.csproj" />
+  </ItemGroup>
+
 </Project>

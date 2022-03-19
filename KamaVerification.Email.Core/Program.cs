@@ -1,10 +1,15 @@
+using KamaVerification.Services;
+using KamaVerification.Email.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 services.AddFluentEmail("localhost@kamaverification")
-    .AddSmtpSender("localhost", 25);
+    .AddSmtpSender("smtp.example.com", 587);
 
-services.AddControllers();
+services.AddScoped<IVerificationRepository, VerificationRepository>()
+    .AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
+    .AddControllers();
 
 var app = builder.Build();
 
