@@ -8,6 +8,7 @@ var services = builder.Services;
 var config = builder.Configuration;
 
 services.AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
+    .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
     .AddSendGrid(o =>
     {
         o.ApiKey = config[Keys.EmailApiKey];
