@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\KamaVerification.Data\KamaVerification.Data.csproj" />
     <ProjectReference Include="..\KamaVerification.Email.Data\KamaVerification.Email.Data.csproj" />
     <ProjectReference Include="..\KamaVerification.Email.Services\KamaVerification.Email.Services.csproj" />
     <ProjectReference Include="..\KamaVerification.Services\KamaVerification.Services.csproj" />

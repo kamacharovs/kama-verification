@@ -1,4 +1,5 @@
 using KamaVerification.Services;
+using KamaVerification.Data.Extensions;
 using KamaVerification.Email.Data;
 using KamaVerification.Email.Services;
 using SendGrid.Extensions.DependencyInjection;
@@ -16,6 +17,7 @@ services.AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
 
 services.AddScoped<IVerificationRepository, VerificationRepository>()
     .AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
+    .AddDataConfiguration(config)
     .AddControllers();
 
 var app = builder.Build();
