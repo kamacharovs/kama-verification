@@ -1,0 +1,27 @@
+name: build-email-core
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Email.Core/KamaVerification.Email.Core.csproj
+      project_test_file: KamaVerification.Email.Tests/KamaVerification.Email.Tests.csproj
+      output_path: app/publish
+
+  build_container:
+    needs: build
+    uses: ./.github/workflows/build-docker-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Email.Core/KamaVerification.Email.Core.csproj
+      project_test_file: KamaVerification.Email.Tests/KamaVerification.Email.Tests.csproj
+      output_path: app/publish
+      dockerfile: kama-verification-email-core.dockerfile
+      tag: kama-verification-email:latest
