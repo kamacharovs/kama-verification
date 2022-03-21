@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SendGrid" Version="9.26.0" />
+    <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KamaVerification.Data\KamaVerification.Data.csproj" />
+    <ProjectReference Include="..\KamaVerification.Email.Data\KamaVerification.Email.Data.csproj" />
+    <ProjectReference Include="..\KamaVerification.Email.Services\KamaVerification.Email.Services.csproj" />
+    <ProjectReference Include="..\KamaVerification.Services\KamaVerification.Services.csproj" />
+  </ItemGroup>
+
+</Project>
