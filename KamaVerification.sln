@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KamaVerification.Services",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KamaVerification.Tests", "KamaVerification.Tests\KamaVerification.Tests.csproj", "{E86E7F42-6517-476B-B137-3A9F370D776F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamaVerification.Data", "KamaVerification.Data\KamaVerification.Data.csproj", "{10600C3B-156A-4122-950A-156C6D5C7344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KamaVerification.Data", "KamaVerification.Data\KamaVerification.Data.csproj", "{10600C3B-156A-4122-950A-156C6D5C7344}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KamaVerification.Data.Migration", "KamaVerification.Data.Migration\KamaVerification.Data.Migration.csproj", "{ADF05257-221C-4CB8-A126-B457021899E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KamaVerification.Data.Migrations", "KamaVerification.Data.Migrations\KamaVerification.Data.Migrations.csproj", "{F2CB166E-361D-4203-866C-47EFE104A5F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{10600C3B-156A-4122-950A-156C6D5C7344}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10600C3B-156A-4122-950A-156C6D5C7344}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10600C3B-156A-4122-950A-156C6D5C7344}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADF05257-221C-4CB8-A126-B457021899E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADF05257-221C-4CB8-A126-B457021899E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADF05257-221C-4CB8-A126-B457021899E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADF05257-221C-4CB8-A126-B457021899E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2CB166E-361D-4203-866C-47EFE104A5F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2CB166E-361D-4203-866C-47EFE104A5F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2CB166E-361D-4203-866C-47EFE104A5F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2CB166E-361D-4203-866C-47EFE104A5F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

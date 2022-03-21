@@ -30,6 +30,7 @@ namespace KamaVerification.Data.Extensions
                     no =>
                     {
                         no.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                        no.MigrationsAssembly("KamaVerification.Data.Migration");
                     }));
 
             return services;

@@ -25,11 +25,11 @@ namespace KamaVerification.Data
 
                 e.HasQueryFilter(x => !x.IsDeleted);
 
-                e.Property(x => x.CustomerId).IsRequired();
+                e.Property(x => x.CustomerId).ValueGeneratedOnAdd().IsRequired();
                 e.Property(x => x.PublicKey).ValueGeneratedOnAdd().HasDefaultValueSql("gen_random_uuid()").IsRequired();
                 e.Property(x => x.Name).IsRequired();
                 e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
-                e.Property(x => x.UpdatedAt).ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
+                e.Property(x => x.UpdatedAt).ValueGeneratedOnAdd().ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.IsDeleted).HasDefaultValue(false).IsRequired();
 
                 e.HasOne(x => x.EmailConfig)
@@ -44,7 +44,7 @@ namespace KamaVerification.Data
 
                 e.HasKey(e => e.CustomerEmailConfigId);
 
-                e.Property(x => x.CustomerEmailConfigId).IsRequired();
+                e.Property(x => x.CustomerEmailConfigId).ValueGeneratedOnAdd().IsRequired();
                 e.Property(x => x.PublicKey).ValueGeneratedOnAdd().HasDefaultValueSql("gen_random_uuid()").IsRequired();
                 e.Property(x => x.CustomerId).IsRequired();
                 e.Property(x => x.Subject).HasMaxLength(300).IsRequired();
@@ -52,7 +52,7 @@ namespace KamaVerification.Data
                 e.Property(x => x.FromName).HasMaxLength(300).IsRequired();
                 e.Property(x => x.ExpirationInMinutes).HasDefaultValueSql("60").IsRequired();
                 e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
-                e.Property(x => x.UpdatedAt).ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
+                e.Property(x => x.UpdatedAt).ValueGeneratedOnAdd().ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
             });
         }
     }
