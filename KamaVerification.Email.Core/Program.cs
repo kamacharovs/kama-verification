@@ -1,6 +1,6 @@
 using KamaVerification.Services;
+using KamaVerification.Email.Data;
 using KamaVerification.Email.Services;
-using SendGrid;
 using SendGrid.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +10,7 @@ var config = builder.Configuration;
 services.AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
     .AddSendGrid(o =>
     {
-        o.ApiKey = config["SendGrid:ApiKey"];
+        o.ApiKey = config[Keys.EmailApiKey];
     });
 
 services.AddScoped<IVerificationRepository, VerificationRepository>()

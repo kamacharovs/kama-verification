@@ -1,4 +1,5 @@
-﻿using KamaVerification.Services;
+﻿using KamaVerification.Email.Data;
+using KamaVerification.Services;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Microsoft.Extensions.Logging;
@@ -33,14 +34,16 @@ namespace KamaVerification.Email.Services
 
         public async Task SendAsync()
         {
+            // Generate code
+            var code = _repo.GenerateCode();
+
             var msg = new SendGridMessage
             {
-                From = new EmailAddress(_config["SendGrid:From"], "Georgi"),
+                From = new EmailAddress(_config[Keys.EmailFrom], "KamaVerification"),
                 Subject = "Sending with SendGrid is Fun"
             };
-            msg.AddContent(MimeType.Html, "<strong>and easy to do anywhere, even with C#</strong>");
-            msg.AddContent(MimeType.Text, "and easy to do anywhere, even with C#");
-            msg.AddTo(new EmailAddress("yifet83692@sofrge.com", "Example User"));
+            msg.AddContent(MimeType.Html, $"<strong>Please enter the following code:<br><br><strong>{code}</strong><br><br></strong>");
+            msg.AddTo(new EmailAddress(_config[Keys.EmailFrom], "Example User"));
 
             var response = await _sendGridClient.SendEmailAsync(msg);
 
