@@ -15,7 +15,7 @@ namespace KamaVerification.Email.Core.Controllers
             _repo = repo;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("send")]
         public async Task<IActionResult> SendAsync()
         {

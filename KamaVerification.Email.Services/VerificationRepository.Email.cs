@@ -39,9 +39,9 @@ namespace KamaVerification.Email.Services
             var msg = new SendGridMessage
             {
                 From = new EmailAddress(config.FromEmail, config.FromName),
-                Subject = "Sending with SendGrid is Fun"
+                Subject = config.Subject
             };
-            msg.AddContent(MimeType.Html, _emailTemplateRepository.Get(code));
+            msg.AddContent(MimeType.Html, _emailTemplateRepository.Get().Replace("{{code}}", code));
             msg.AddTo(new EmailAddress(config.FromEmail, "Example User"));
 
             var response = await _sendGridClient.SendEmailAsync(msg);

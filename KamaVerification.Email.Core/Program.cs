@@ -8,17 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var config = builder.Configuration;
 
-services.AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
+services.AddScoped<IVerificationRepository, VerificationRepository>()
     .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
+    .AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
+    .AddDataConfiguration(config)
     .AddSendGrid(o =>
     {
         o.ApiKey = config[Keys.EmailApiKey];
     });
 
-services.AddScoped<IVerificationRepository, VerificationRepository>()
-    .AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
-    .AddDataConfiguration(config)
-    .AddControllers();
+services.AddControllers();
 
 var app = builder.Build();
 

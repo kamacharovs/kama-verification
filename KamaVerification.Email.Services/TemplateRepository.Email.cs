@@ -5,7 +5,7 @@ namespace KamaVerification.Email.Services
 {
     public interface IEmailTemplateRepository
     {
-        string Get(string code);
+        string Get();
     }
 
     public class EmailTemplateRepository : IEmailTemplateRepository
@@ -21,9 +21,40 @@ namespace KamaVerification.Email.Services
             _config = config;
         }
 
-        public string Get(string code)
+        public string Get()
         {
-            return $"<strong>Please enter the following code:<br><br><strong>{code}</strong><br><br></strong>";
+            return @"
+                <!DOCTYPE html>
+                <html>
+                <head>
+                <style>
+                .custom-text {
+                    display: block;
+                    margin-block-start: 1em;
+                    margin-block-end: 1em;
+                    margin-inline-start: 0px;
+                    margin-inline-end: 0px;
+                }
+
+                </style>
+                </head>
+                <body>
+
+                <div class=""custom-text"">
+                    <p>Please enter the following code:</p>
+                </div>
+
+                <br>
+                    <strong>{{code}}</strong>
+                <br><br>
+
+                <div class=""custom-text"">
+                    <p>This code will be active for 1 hour. If it has expired you can request a new code from the verification page.</p>
+                </div>
+                <br>
+
+                </body>
+                </html>";
         }
     }
 }
