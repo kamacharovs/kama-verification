@@ -17,7 +17,7 @@ jobs:
 
   build_container:
     needs: build
-    uses: ./.github/workflows/build-docker-base.yml
+    uses: ./.github/workflows/build-container-base.yml
     with:
       configuration: release
       project_file: KamaVerification.Email.Core/KamaVerification.Email.Core.csproj
