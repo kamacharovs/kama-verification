@@ -10,7 +10,7 @@ namespace KamaVerification.Tests.Services
 
         public UnitTest1()
         {
-            _repo = new VerificationRepository();
+            _repo = new VerificationRepository(null, null);
         }
 
         [Theory]
