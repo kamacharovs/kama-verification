@@ -49,7 +49,7 @@ namespace KamaVerification.Email.Services
                 <br><br>
 
                 <div class=""custom-text"">
-                    <p>This code will be active for 1 hour. If it has expired you can request a new code from the verification page.</p>
+                    <p>This code will be active for {{expiresIn}} minutes. If it has expired you can request a new code from the verification page.</p>
                 </div>
                 <br>
 

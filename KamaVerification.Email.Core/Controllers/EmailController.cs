@@ -1,5 +1,6 @@
 using KamaVerification.Email.Services;
 using KamaVerification.Data.Models;
+using KamaVerification.Email.Data.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KamaVerification.Email.Core.Controllers
@@ -19,26 +20,33 @@ namespace KamaVerification.Email.Core.Controllers
         [Route("send")]
         public async Task<IActionResult> SendAsync()
         {
-            await _repo.SendAsync(new Customer
-            {
-                CustomerId = 1,
-                PublicKey = Guid.NewGuid(),
-                Name = "Test",
-                CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow,
-                IsDeleted = false,
-                EmailConfig = new CustomerEmailConfig
+            await _repo.SendAsync(
+                new EmailRequest
                 {
-                    CustomerEmailConfigId = 1,
-                    PublicKey = Guid.NewGuid(),
+                    Name = "Georgi",
+                    To = "yifet83692@sofrge.com"
+                },
+                new Customer
+                {
                     CustomerId = 1,
-                    Subject = "Your customer verification code",
-                    FromEmail = "yifet83692@sofrge.com",
-                    FromName = "Test Customer",
+                    PublicKey = Guid.NewGuid(),
+                    Name = "Test",
                     CreatedAt = DateTime.UtcNow,
-                    UpdatedAt= DateTime.UtcNow
-                }
-            });
+                    UpdatedAt = DateTime.UtcNow,
+                    IsDeleted = false,
+                    EmailConfig = new CustomerEmailConfig
+                    {
+                        CustomerEmailConfigId = 1,
+                        PublicKey = Guid.NewGuid(),
+                        CustomerId = 1,
+                        Subject = "Your customer verification code",
+                        FromEmail = "yifet83692@sofrge.com",
+                        FromName = "Test Customer",
+                        ExpirationInMinutes = 15,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    }
+                });
 
             return Ok();
         }

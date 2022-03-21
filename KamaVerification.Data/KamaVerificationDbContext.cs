@@ -50,6 +50,7 @@ namespace KamaVerification.Data
                 e.Property(x => x.Subject).HasMaxLength(300).IsRequired();
                 e.Property(x => x.FromEmail).HasMaxLength(300).IsRequired();
                 e.Property(x => x.FromName).HasMaxLength(300).IsRequired();
+                e.Property(x => x.ExpirationInMinutes).HasDefaultValueSql("60").IsRequired();
                 e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.UpdatedAt).ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
             });
