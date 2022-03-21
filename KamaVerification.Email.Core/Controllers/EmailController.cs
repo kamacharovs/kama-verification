@@ -1,6 +1,6 @@
 using KamaVerification.Email.Services;
-using KamaVerification.Data.Models;
 using KamaVerification.Email.Data.Dtos;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KamaVerification.Email.Core.Controllers
@@ -18,37 +18,9 @@ namespace KamaVerification.Email.Core.Controllers
 
         [HttpPost]
         [Route("send")]
-        public async Task<IActionResult> SendAsync()
+        public async Task<IActionResult> SendAsync([FromBody, Required] EmailRequest request)
         {
-            await _repo.SendAsync(
-                new EmailRequest
-                {
-                    Name = "Georgi",
-                    To = "yifet83692@sofrge.com"
-                },
-                new Customer
-                {
-                    CustomerId = 1,
-                    PublicKey = Guid.NewGuid(),
-                    Name = "Test",
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow,
-                    IsDeleted = false,
-                    EmailConfig = new CustomerEmailConfig
-                    {
-                        CustomerEmailConfigId = 1,
-                        PublicKey = Guid.NewGuid(),
-                        CustomerId = 1,
-                        Subject = "Your customer verification code",
-                        FromEmail = "yifet83692@sofrge.com",
-                        FromName = "Test Customer",
-                        ExpirationInMinutes = 15,
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow
-                    }
-                });
-
-            return Ok();
+            return Ok(new { code = await _repo.SendAsync(request) });
         }
     }
 }
