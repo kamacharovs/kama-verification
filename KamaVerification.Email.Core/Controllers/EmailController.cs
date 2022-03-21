@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace KamaVerification.Email.Core.Controllers
 {
     [ApiController]
-    [Route("v1/email")]
+    [Route("v1/verification/email")]
     public class EmailController : ControllerBase
     {
         private readonly IEmailVerificationRepository _repo;
