@@ -11,7 +11,7 @@ namespace KamaVerification.Email.Services
 {
     public interface IEmailVerificationRepository
     {
-        Task SendAsync(EmailRequest request, Customer customer);
+        Task<string> SendAsync(EmailRequest request);
     }
 
     public class EmailVerificationRepository : IEmailVerificationRepository
@@ -37,8 +37,9 @@ namespace KamaVerification.Email.Services
 
         }
 
-        public async Task SendAsync(EmailRequest request, Customer customer)
+        public async Task<string> SendAsync(EmailRequest request)
         {
+            var customer = await _verificationRepo.GetCustomerAsync(1);
             var customerEmailConfig = customer.EmailConfig;
             var code = _verificationRepo.GenerateCode();
             var template = _emailTemplateRepository.Get()
@@ -57,6 +58,8 @@ namespace KamaVerification.Email.Services
 
             if (response.IsSuccessStatusCode) _logger.LogInformation("Successfully sent email for Customer={CustomerName}", customer.Name);
             else throw new Exception(string.Join(", ", response.Body));
+
+            return code;
         }
     }
 }

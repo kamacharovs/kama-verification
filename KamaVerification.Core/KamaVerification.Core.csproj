@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KamaVerification.Data\KamaVerification.Data.csproj" />
+    <ProjectReference Include="..\KamaVerification.Services\KamaVerification.Services.csproj" />
+  </ItemGroup>
+
+</Project>

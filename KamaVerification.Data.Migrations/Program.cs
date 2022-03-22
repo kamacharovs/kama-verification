@@ -1,6 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using KamaVerification.Data.Extensions;
+using KamaVerification.Data;
+using KamaVerification.Data.Migrations;
 
 var config = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -8,9 +11,15 @@ var config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
-Host.CreateDefaultBuilder(args)
+var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddDataConfiguration(config);
     })
     .Build();
+
+var context = host.Services.GetService<KamaVerificationDbContext>();
+var fakeDataManager = new FakeDataManager(context);
+
+await context.Database.EnsureCreatedAsync();
+await fakeDataManager.SeedDataAsync();
