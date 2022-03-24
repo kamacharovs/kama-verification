@@ -37,7 +37,6 @@ namespace KamaVerification.Email.Services
             _customerRepository = customerRepository;
             _emailTemplateRepository = emailTemplateRepository;
             _sendGridClient = sendGridClient;
-
         }
 
         public async Task<string> SendAsync(EmailRequest request)
@@ -45,7 +44,7 @@ namespace KamaVerification.Email.Services
             var customer = await _customerRepository.GetAsync(1);
             var customerEmailConfig = customer.EmailConfig;
             var code = _verificationRepo.GenerateCode();
-            var template = _emailTemplateRepository.Get()
+            var template = _emailTemplateRepository.GetDefault()
                 .Replace("{{code}}", code)
                 .Replace("{{expiresIn}}", customerEmailConfig.ExpirationInMinutes.ToString());
 

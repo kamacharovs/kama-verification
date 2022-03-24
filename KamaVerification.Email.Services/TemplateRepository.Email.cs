@@ -5,7 +5,7 @@ namespace KamaVerification.Email.Services
 {
     public interface IEmailTemplateRepository
     {
-        string Get();
+        string GetDefault();
     }
 
     public class EmailTemplateRepository : IEmailTemplateRepository
@@ -21,7 +21,7 @@ namespace KamaVerification.Email.Services
             _config = config;
         }
 
-        public string Get()
+        public string GetDefault()
         {
             return @"
                 <!DOCTYPE html>
