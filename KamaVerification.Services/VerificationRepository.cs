@@ -7,13 +7,13 @@ namespace KamaVerification.Services
 {
     public interface IVerificationRepository
     {
-        Task<Customer> GetCustomerAsync(int customerId);
         string GenerateCode(int length = 6);
     }
 
     public class VerificationRepository : IVerificationRepository
     {
         private readonly ILogger<VerificationRepository> _logger;
+        private readonly ICustomerRepository _customerRepository;
         private readonly KamaVerificationDbContext _context;
 
         private Random _random = new Random();
@@ -21,16 +21,12 @@ namespace KamaVerification.Services
 
         public VerificationRepository(
             ILogger<VerificationRepository> logger,
+            ICustomerRepository customerRepository,
             KamaVerificationDbContext context)
         {
             _logger = logger;
+            _customerRepository = customerRepository;
             _context = context;
-        }
-
-        public async Task<Customer> GetCustomerAsync(int customerId)
-        {
-            return await _context.Customers
-                .FirstAsync(x => x.CustomerId == customerId);
         }
 
         public string GenerateCode(int length = 6)
