@@ -19,6 +19,7 @@ namespace KamaVerification.Email.Services
         private readonly ILogger<EmailVerificationRepository> _logger;
         private readonly IConfiguration _config;
         private readonly IVerificationRepository _verificationRepo;
+        private readonly ICustomerRepository _customerRepository;
         private readonly IEmailTemplateRepository _emailTemplateRepository;
         private readonly ISendGridClient _sendGridClient;
 
@@ -26,23 +27,24 @@ namespace KamaVerification.Email.Services
             ILogger<EmailVerificationRepository> logger,
             IConfiguration config,
             IVerificationRepository verificationRepo,
+            ICustomerRepository customerRepository,
             IEmailTemplateRepository emailTemplateRepository,
             ISendGridClient sendGridClient)
         {
             _logger = logger;
             _config = config;
             _verificationRepo = verificationRepo;
+            _customerRepository = customerRepository;
             _emailTemplateRepository = emailTemplateRepository;
             _sendGridClient = sendGridClient;
-
         }
 
         public async Task<string> SendAsync(EmailRequest request)
         {
-            var customer = await _verificationRepo.GetCustomerAsync(1);
+            var customer = await _customerRepository.GetAsync(1);
             var customerEmailConfig = customer.EmailConfig;
             var code = _verificationRepo.GenerateCode();
-            var template = _emailTemplateRepository.Get()
+            var template = _emailTemplateRepository.GetDefault()
                 .Replace("{{code}}", code)
                 .Replace("{{expiresIn}}", customerEmailConfig.ExpirationInMinutes.ToString());
 
