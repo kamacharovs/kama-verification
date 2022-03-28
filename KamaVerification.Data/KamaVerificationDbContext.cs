@@ -6,6 +6,7 @@ namespace KamaVerification.Data
     public class KamaVerificationDbContext : DbContext
     {
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<CustomerApiKey> CustomersApiKeys { get; set; }
         public virtual DbSet<CustomerEmailConfig> CustomerEmailConfigs { get; set; }
 
         public KamaVerificationDbContext(DbContextOptions<KamaVerificationDbContext> options)
