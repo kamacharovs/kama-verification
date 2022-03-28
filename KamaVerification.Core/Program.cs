@@ -1,5 +1,6 @@
 using KamaVerification.Data.Extensions;
 using KamaVerification.Services;
+using KamaVerification.Services.Middlewares;
 using KamaVerification.Data.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ services.AddControllers();
 
 var app = builder.Build();
 
+app.UseMiddleware<ApiKeyMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
