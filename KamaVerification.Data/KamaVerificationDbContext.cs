@@ -21,21 +21,40 @@ namespace KamaVerification.Data
             {
                 e.ToTable("customer");
 
-                e.HasKey(e => e.CustomerId);
+                e.HasKey(x => x.CustomerId);
 
                 e.HasQueryFilter(x => !x.IsDeleted);
 
                 e.Property(x => x.CustomerId).ValueGeneratedOnAdd().IsRequired();
                 e.Property(x => x.PublicKey).ValueGeneratedOnAdd().HasDefaultValueSql("gen_random_uuid()").IsRequired();
-                e.Property(x => x.Name).IsRequired();
+                e.Property(x => x.Name).HasMaxLength(200).IsRequired();
                 e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.UpdatedAt).ValueGeneratedOnAdd().ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
-                e.Property(x => x.IsDeleted).HasDefaultValue(false).IsRequired();
+                e.Property(x => x.IsDeleted).HasDefaultValueSql("false").IsRequired();
+
+                e.HasOne(x => x.ApiKey)
+                    .WithOne()
+                    .HasForeignKey<Customer>(x => x.CustomerId)
+                    .OnDelete(DeleteBehavior.NoAction);
 
                 e.HasOne(x => x.EmailConfig)
                     .WithOne()
                     .HasForeignKey<Customer>(x => x.CustomerId)
                     .OnDelete(DeleteBehavior.NoAction);
+            });
+
+            modelBuilder.Entity<CustomerApiKey>(e =>
+            {
+                e.ToTable("customer_api_key");
+
+                e.HasKey(x => x.CustomerId);
+
+                e.Property(x => x.CustomerId).ValueGeneratedNever().IsRequired();
+                e.Property(x => x.PublicKey).ValueGeneratedOnAdd().HasDefaultValueSql("gen_random_uuid()").IsRequired();
+                e.Property(x => x.ApiKey).HasMaxLength(200).IsRequired();
+                e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
+                e.Property(x => x.UpdatedAt).ValueGeneratedOnAdd().ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
+                e.Property(x => x.IsEnabled).HasDefaultValueSql("true").IsRequired();
             });
 
             modelBuilder.Entity<CustomerEmailConfig>(e =>
