@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using KamaVerification.Services;
 
 namespace KamaVerification.Services.Middlewares
 {
