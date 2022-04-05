@@ -3,7 +3,7 @@
     public class CustomerEmailConfig
     {
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
+        public virtual Customer Customer { get; set; }
         public Guid PublicKey { get; set; } = Guid.NewGuid();
         public string Subject { get; set; }
         public string FromEmail { get; set; }

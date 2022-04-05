@@ -164,14 +164,14 @@ namespace KamaVerification.Data.Migrations.Migrations
             modelBuilder.Entity("KamaVerification.Data.Models.Customer", b =>
                 {
                     b.HasOne("KamaVerification.Data.Models.CustomerApiKey", "ApiKey")
-                        .WithOne()
+                        .WithOne("Customer")
                         .HasForeignKey("KamaVerification.Data.Models.Customer", "CustomerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_customer_customers_api_keys_customer_id");
 
                     b.HasOne("KamaVerification.Data.Models.CustomerEmailConfig", "EmailConfig")
-                        .WithOne()
+                        .WithOne("Customer")
                         .HasForeignKey("KamaVerification.Data.Models.Customer", "CustomerId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
@@ -180,6 +180,16 @@ namespace KamaVerification.Data.Migrations.Migrations
                     b.Navigation("ApiKey");
 
                     b.Navigation("EmailConfig");
+                });
+
+            modelBuilder.Entity("KamaVerification.Data.Models.CustomerApiKey", b =>
+                {
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("KamaVerification.Data.Models.CustomerEmailConfig", b =>
+                {
+                    b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618
         }
