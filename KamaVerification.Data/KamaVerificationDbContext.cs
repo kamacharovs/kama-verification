@@ -34,12 +34,12 @@ namespace KamaVerification.Data
                 e.Property(x => x.IsDeleted).HasDefaultValueSql("false").IsRequired();
 
                 e.HasOne(x => x.ApiKey)
-                    .WithOne()
+                    .WithOne(x => x.Customer)
                     .HasForeignKey<Customer>(x => x.CustomerId)
                     .OnDelete(DeleteBehavior.NoAction);
 
                 e.HasOne(x => x.EmailConfig)
-                    .WithOne()
+                    .WithOne(x => x.Customer)
                     .HasForeignKey<Customer>(x => x.CustomerId)
                     .OnDelete(DeleteBehavior.NoAction);
             });

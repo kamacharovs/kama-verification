@@ -3,6 +3,7 @@
     public class CustomerApiKey
     {
         public int CustomerId { get; set; }
+        public Customer Customer { get; set; }
         public Guid PublicKey { get; set; } = Guid.NewGuid();
         public string ApiKey { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
