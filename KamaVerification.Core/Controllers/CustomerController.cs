@@ -23,5 +23,13 @@ namespace KamaVerification.Core.Controllers
         {
             return Ok(await _repo.AddAsync(dto));
         }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("token")]
+        public async Task<IActionResult> GetTokenAsync([FromBody] TokenRequest request)
+        {
+            return Ok(await _repo.GetTokenAsync(request));
+        }
     }
 }

@@ -2,9 +2,8 @@
 {
     public class CustomerEmailConfig
     {
-        public int CustomerEmailConfigId { get; set; }
-        public Guid PublicKey { get; set; } = Guid.NewGuid();
         public int CustomerId { get; set; }
+        public Guid PublicKey { get; set; } = Guid.NewGuid();
         public string Subject { get; set; }
         public string FromEmail { get; set; }
         public string FromName { get; set; }

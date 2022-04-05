@@ -62,11 +62,10 @@ namespace KamaVerification.Data
             {
                 e.ToTable("customer_email_config");
 
-                e.HasKey(e => e.CustomerEmailConfigId);
+                e.HasKey(e => e.CustomerId);
 
-                e.Property(x => x.CustomerEmailConfigId).ValueGeneratedOnAdd().IsRequired();
+                e.Property(x => x.CustomerId).ValueGeneratedNever().IsRequired();
                 e.Property(x => x.PublicKey).ValueGeneratedOnAdd().HasDefaultValueSql("gen_random_uuid()").IsRequired();
-                e.Property(x => x.CustomerId).IsRequired();
                 e.Property(x => x.Subject).HasMaxLength(300).IsRequired();
                 e.Property(x => x.FromEmail).HasMaxLength(300).IsRequired();
                 e.Property(x => x.FromName).HasMaxLength(300).IsRequired();
