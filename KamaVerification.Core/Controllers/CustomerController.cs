@@ -1,7 +1,7 @@
 ﻿using KamaVerification.Data.Dtos;
 using KamaVerification.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
 
 namespace KamaVerification.Core.Controllers
@@ -17,6 +17,7 @@ namespace KamaVerification.Core.Controllers
             _repo = repo;
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody, Required] CustomerDto dto)
         {

@@ -52,6 +52,15 @@ namespace KamaVerification.Services
             await _context.Customers.AddAsync(customer);
             await _context.SaveChangesAsync();
 
+            if (dto.GenerateApiKey)
+            {
+                await _context.CustomersApiKeys.AddAsync(new CustomerApiKey
+                {
+                    CustomerId = customer.CustomerId,
+                    ApiKey = GenerateApiKey()
+                });
+            }
+
             _logger.LogInformation("Added customer with name={CustomerName}",
                 customer.Name);
 

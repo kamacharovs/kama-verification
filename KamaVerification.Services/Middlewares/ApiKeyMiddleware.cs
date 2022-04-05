@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KamaVerification.Services.Middlewares
@@ -18,7 +19,12 @@ namespace KamaVerification.Services.Middlewares
             if (!context.Request.Headers.TryGetValue(APIKEYNAME, out var apiKey))
             {
                 context.Response.StatusCode = 401;
-                await context.Response.WriteAsync($"{APIKEYNAME} was not provided");
+                context.Response.ContentType = "application/problem+json";
+                await context.Response.WriteAsync(JsonSerializer.Serialize(new 
+                {
+                    code = 401,
+                    message = $"{APIKEYNAME} was not provided"
+                }));
 
                 return;
             }
@@ -29,7 +35,12 @@ namespace KamaVerification.Services.Middlewares
             if (customer is null)
             {
                 context.Response.StatusCode = 401;
-                await context.Response.WriteAsync("Unauthorized");
+                context.Response.ContentType = "application/problem+json";
+                await context.Response.WriteAsync(JsonSerializer.Serialize(new 
+                {
+                    code = 401,
+                    message = $"Unauthorized"
+                }));
 
                 return;
             }
