@@ -1,4 +1,5 @@
 using KamaVerification.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KamaVerification.Core.Controllers
@@ -14,6 +15,7 @@ namespace KamaVerification.Core.Controllers
             _repo = repo;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("code")]
         public IActionResult GetCode()

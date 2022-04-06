@@ -2,6 +2,7 @@ using KamaVerification.Email.Services;
 using KamaVerification.Email.Data.Dtos;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace KamaVerification.Email.Core.Controllers
 {
@@ -16,6 +17,7 @@ namespace KamaVerification.Email.Core.Controllers
             _repo = repo;
         }
 
+        [Authorize]
         [HttpPost]
         [Route("send")]
         public async Task<IActionResult> SendAsync([FromBody, Required] EmailRequest request)
