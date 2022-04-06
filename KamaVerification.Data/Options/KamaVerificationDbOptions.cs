@@ -1,4 +1,4 @@
-﻿namespace KamaVerification.Data
+﻿namespace KamaVerification.Data.Options
 {
     public class KamaVerificationDbOptions
     {
