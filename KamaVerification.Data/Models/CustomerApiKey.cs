@@ -8,6 +8,6 @@
         public string ApiKey { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-        public bool IsEnabled { get; set; } = true;
+        public bool? IsEnabled { get; set; } = true;
     }
 }

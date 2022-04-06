@@ -24,8 +24,6 @@ namespace KamaVerification.Data
 
                 e.HasKey(x => x.CustomerId);
 
-                e.HasQueryFilter(x => !x.IsDeleted);
-
                 e.Property(x => x.CustomerId).ValueGeneratedOnAdd().IsRequired();
                 e.Property(x => x.PublicKey).ValueGeneratedOnAdd().HasDefaultValueSql("gen_random_uuid()").IsRequired();
                 e.Property(x => x.Name).HasMaxLength(200).IsRequired();

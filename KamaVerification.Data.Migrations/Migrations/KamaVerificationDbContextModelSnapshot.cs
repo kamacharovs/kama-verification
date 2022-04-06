@@ -37,7 +37,8 @@ namespace KamaVerification.Data.Migrations.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("current_timestamp");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasColumnName("is_deleted")
@@ -85,7 +86,8 @@ namespace KamaVerification.Data.Migrations.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("current_timestamp");
 
-                    b.Property<bool>("IsEnabled")
+                    b.Property<bool?>("IsEnabled")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasColumnName("is_enabled")

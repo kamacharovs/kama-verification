@@ -57,18 +57,10 @@ namespace KamaVerification.Services
         public async Task<Customer> AddAsync(CustomerDto dto)
         {
             var customer = _mapper.Map<Customer>(dto);
+            customer.ApiKey = dto.GenerateApiKey ? new CustomerApiKey { ApiKey = GenerateApiKey() } : null;
 
             await _context.Customers.AddAsync(customer);
             await _context.SaveChangesAsync();
-
-            if (dto.GenerateApiKey)
-            {
-                await _context.CustomersApiKeys.AddAsync(new CustomerApiKey
-                {
-                    CustomerId = customer.CustomerId,
-                    ApiKey = GenerateApiKey()
-                });
-            }
 
             _logger.LogInformation("Added customer with name={CustomerName}",
                 customer.Name);

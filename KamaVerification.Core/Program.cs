@@ -1,10 +1,12 @@
 using System.Text;
+using System.Text.Json;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using KamaVerification.Data.Extensions;
 using KamaVerification.Services;
 using KamaVerification.Data;
 using KamaVerification.Data.Mappers;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -33,6 +35,12 @@ services.AddAuthorization()
     });
 
 services.AddControllers();
+services.AddMvcCore()
+    .AddJsonOptions(x =>
+    {
+        x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });
 
 var app = builder.Build();
 

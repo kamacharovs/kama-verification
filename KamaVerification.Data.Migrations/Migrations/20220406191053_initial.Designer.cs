@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KamaVerification.Data.Migrations.Migrations
 {
     [DbContext(typeof(KamaVerificationDbContext))]
-    [Migration("20220406185243_initial")]
+    [Migration("20220406191053_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,8 @@ namespace KamaVerification.Data.Migrations.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("current_timestamp");
 
-                    b.Property<bool>("IsDeleted")
+                    b.Property<bool?>("IsDeleted")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasColumnName("is_deleted")
@@ -87,7 +88,8 @@ namespace KamaVerification.Data.Migrations.Migrations
                         .HasColumnName("created_at")
                         .HasDefaultValueSql("current_timestamp");
 
-                    b.Property<bool>("IsEnabled")
+                    b.Property<bool?>("IsEnabled")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("boolean")
                         .HasColumnName("is_enabled")
