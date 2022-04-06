@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using KamaVerification.Services;
 using KamaVerification.Data.Extensions;
 using KamaVerification.Data.Mappers;
@@ -22,7 +24,12 @@ services.AddScoped<ITokenRepository, TokenRepository>()
         o.ApiKey = config[Keys.EmailApiKey];
     });
 
-services.AddControllers();
+services.AddControllers()
+    .AddJsonOptions(x =>
+    {
+        x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+        x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });
 
 var app = builder.Build();
 

@@ -12,10 +12,8 @@ services.AddScoped<ITokenRepository, TokenRepository>()
     .AddScoped<IVerificationRepository, VerificationRepository>()
     .AddScoped<ICustomerRepository, CustomerRepository>()
     .AddDataConfiguration(config)
+    .AddJwtAuthentication(config)
     .AddAutoMapper(typeof(CustomerProfile).Assembly);
-
-services.AddAuthorization()
-    .AddJwtAuthentication(config);
 
 services.AddControllers();
 services.AddMvcCore()

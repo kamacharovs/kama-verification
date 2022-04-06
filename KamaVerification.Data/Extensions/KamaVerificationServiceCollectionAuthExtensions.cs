@@ -14,7 +14,8 @@ namespace KamaVerification.Data.Extensions
             var configSection = config.GetConfigSection(JwtOptions.Section);
             var options = configSection.Get<JwtOptions>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthorization()
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(x =>
                 {
                     x.TokenValidationParameters = new()
