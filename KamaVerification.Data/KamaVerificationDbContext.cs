@@ -32,16 +32,6 @@ namespace KamaVerification.Data
                 e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.UpdatedAt).ValueGeneratedOnAdd().ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.IsDeleted).HasDefaultValueSql("false").IsRequired();
-
-                e.HasOne(x => x.ApiKey)
-                    .WithOne(x => x.Customer)
-                    .HasForeignKey<Customer>(x => x.CustomerId)
-                    .OnDelete(DeleteBehavior.NoAction);
-
-                e.HasOne(x => x.EmailConfig)
-                    .WithOne(x => x.Customer)
-                    .HasForeignKey<Customer>(x => x.CustomerId)
-                    .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<CustomerApiKey>(e =>
@@ -56,6 +46,11 @@ namespace KamaVerification.Data
                 e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.UpdatedAt).ValueGeneratedOnAdd().ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.IsEnabled).HasDefaultValueSql("true").IsRequired();
+
+                e.HasOne(x => x.Customer)
+                    .WithOne(x => x.ApiKey)
+                    .HasForeignKey<CustomerApiKey>(x => x.CustomerId)
+                    .OnDelete(DeleteBehavior.NoAction);
             });
 
             modelBuilder.Entity<CustomerEmailConfig>(e =>
@@ -72,6 +67,11 @@ namespace KamaVerification.Data
                 e.Property(x => x.ExpirationInMinutes).HasDefaultValueSql("60").IsRequired();
                 e.Property(x => x.CreatedAt).ValueGeneratedOnAdd().HasDefaultValueSql("current_timestamp").IsRequired();
                 e.Property(x => x.UpdatedAt).ValueGeneratedOnAdd().ValueGeneratedOnUpdate().HasDefaultValueSql("current_timestamp").IsRequired();
+
+                e.HasOne(x => x.Customer)
+                    .WithOne(x => x.EmailConfig)
+                    .HasForeignKey<CustomerEmailConfig>(x => x.CustomerId)
+                    .OnDelete(DeleteBehavior.NoAction);
             });
         }
     }

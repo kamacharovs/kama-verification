@@ -29,6 +29,8 @@ namespace KamaVerification.Data.Migrations.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("customer_id");
 
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("CustomerId"));
+
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp with time zone")
@@ -161,35 +163,35 @@ namespace KamaVerification.Data.Migrations.Migrations
                     b.ToTable("customer_email_config", (string)null);
                 });
 
-            modelBuilder.Entity("KamaVerification.Data.Models.Customer", b =>
-                {
-                    b.HasOne("KamaVerification.Data.Models.CustomerApiKey", "ApiKey")
-                        .WithOne("Customer")
-                        .HasForeignKey("KamaVerification.Data.Models.Customer", "CustomerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired()
-                        .HasConstraintName("fk_customer_customers_api_keys_customer_id");
-
-                    b.HasOne("KamaVerification.Data.Models.CustomerEmailConfig", "EmailConfig")
-                        .WithOne("Customer")
-                        .HasForeignKey("KamaVerification.Data.Models.Customer", "CustomerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired()
-                        .HasConstraintName("fk_customer_customer_email_configs_customer_id");
-
-                    b.Navigation("ApiKey");
-
-                    b.Navigation("EmailConfig");
-                });
-
             modelBuilder.Entity("KamaVerification.Data.Models.CustomerApiKey", b =>
                 {
+                    b.HasOne("KamaVerification.Data.Models.Customer", "Customer")
+                        .WithOne("ApiKey")
+                        .HasForeignKey("KamaVerification.Data.Models.CustomerApiKey", "CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("fk_customer_api_key_customer_customer_id");
+
                     b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("KamaVerification.Data.Models.CustomerEmailConfig", b =>
                 {
+                    b.HasOne("KamaVerification.Data.Models.Customer", "Customer")
+                        .WithOne("EmailConfig")
+                        .HasForeignKey("KamaVerification.Data.Models.CustomerEmailConfig", "CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("fk_customer_email_config_customer_customer_id");
+
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("KamaVerification.Data.Models.Customer", b =>
+                {
+                    b.Navigation("ApiKey");
+
+                    b.Navigation("EmailConfig");
                 });
 #pragma warning restore 612, 618
         }
