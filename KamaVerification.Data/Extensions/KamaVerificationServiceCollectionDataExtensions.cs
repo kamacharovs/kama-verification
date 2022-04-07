@@ -1,28 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KamaVerification.Data.Options;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
 
 namespace KamaVerification.Data.Extensions
 {
-    public static class KamaVerificationServiceCollectionDataExtensions
+    public static class KamaVerificationDataConfigurationExtensions
     {
-        public static IConfigurationSection GetDbSection(this IConfiguration configuration)
-        {
-            var configurationSection = configuration.GetSection(KamaVerificationDbOptions.Section);
-
-            if (configurationSection is null)
-            {
-                throw new ConfigurationErrorsException($"Configuration {KamaVerificationDbOptions.Section} is required");
-            }
-
-            return configurationSection;
-        }
-
         public static IServiceCollection AddDataConfiguration(this IServiceCollection services, IConfiguration config)
         {
-            var configurationSection = config.GetDbSection();
-            var options = configurationSection.Get<KamaVerificationDbOptions>();
+            var configSection = config.GetConfigSection(KamaVerificationDbOptions.Section);
+            var options = configSection.Get<KamaVerificationDbOptions>();
 
             services.AddDbContext<KamaVerificationDbContext>(o =>
                 o.UseLazyLoadingProxies()
@@ -30,7 +18,7 @@ namespace KamaVerification.Data.Extensions
                     no =>
                     {
                         no.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
-                        no.MigrationsAssembly("KamaVerification.Data.Migration");
+                        no.MigrationsAssembly("KamaVerification.Data.Migrations");
                     }));
 
             return services;
