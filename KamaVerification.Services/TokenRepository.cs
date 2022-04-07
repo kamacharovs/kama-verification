@@ -1,12 +1,14 @@
 using System.Text;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Options;
 using KamaVerification.Data;
 using KamaVerification.Data.Models;
 using KamaVerification.Data.Dtos;
+using KamaVerification.Data.Options;
 
 namespace KamaVerification.Services
 {
@@ -18,14 +20,14 @@ namespace KamaVerification.Services
     public class TokenRepository : ITokenRepository
     {
         private readonly ILogger<TokenRepository> _logger;
-        private readonly IConfiguration _config;
+        private readonly IOptions<JwtOptions> _jwtOptions;
 
         public TokenRepository(
             ILogger<TokenRepository> logger,
-            IConfiguration config)
+            IOptions<JwtOptions> jwtOptions)
         {
             _logger = logger;
-            _config = config;
+            _jwtOptions = jwtOptions;
         }
 
         private IEnumerable<Claim> BuildClaims(Customer customer)
@@ -40,15 +42,15 @@ namespace KamaVerification.Services
         public TokenResponse BuildToken(Customer customer)
         {
             var claims = BuildClaims(customer);
-            var expires = Convert.ToInt32(_config[Keys.JwtExpires]);
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config[Keys.JwtKey]));
+            var expires = Convert.ToInt32(_jwtOptions.Value.Expires);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtOptions.Value.Key));
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddSeconds(expires),
-                Issuer = _config[Keys.JwtIssuer],
-                Audience = _config[Keys.JwtAudience],
+                Issuer = _jwtOptions.Value.Issuer,
+                Audience = _jwtOptions.Value.Audience,
                 SigningCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using KamaVerification.Services;
 using KamaVerification.Data.Extensions;
 using KamaVerification.Data.Mappers;
+using KamaVerification.Data.Options;
 using KamaVerification.Email.Data;
 using KamaVerification.Email.Services;
 using SendGrid.Extensions.DependencyInjection;
@@ -23,6 +24,9 @@ services.AddScoped<ITokenRepository, TokenRepository>()
     {
         o.ApiKey = config[Keys.EmailApiKey];
     });
+
+services.Configure<KamaVerificationDbOptions>(config.GetSection(KamaVerificationDbOptions.Section))
+    .Configure<JwtOptions>(config.GetSection(JwtOptions.Section));
 
 services.AddControllers()
     .AddJsonOptions(x =>
