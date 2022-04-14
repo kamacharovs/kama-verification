@@ -67,7 +67,3 @@ jobs:
             repo: context.repo.repo,
             body: output
           })
-
-    - name: terraform plan status
-      if: steps.plan.outcome == 'failure'
-      run: exit 1
