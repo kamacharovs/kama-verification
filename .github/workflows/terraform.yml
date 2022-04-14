@@ -34,7 +34,7 @@ jobs:
       id: validate
       run: terraform validate
 
-    - name: terraform plan
+    - name: terraform plan -out=tfplan -lock=false
       id: plan
       run: terraform plan
 
@@ -74,4 +74,4 @@ jobs:
 
     - name: terraform apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply
+      run: terraform apply tfplan
