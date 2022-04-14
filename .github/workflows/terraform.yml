@@ -36,7 +36,7 @@ jobs:
 
     - name: terraform plan
       id: plan
-      run: terraform plan -out=tfplan
+      run: terraform plan
 
     - name: update pull request
       uses: actions/github-script@0.9.0
@@ -73,5 +73,5 @@ jobs:
       run: exit 1
 
     - name: terraform apply
-      #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply tfplan
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: terraform apply
