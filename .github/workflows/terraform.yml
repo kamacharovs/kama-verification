@@ -34,7 +34,7 @@ jobs:
       id: validate
       run: terraform validate
 
-    - name: terraform plan -out=tfplan -lock=false
+    - name: terraform plan
       id: plan
       run: terraform plan
 
@@ -71,7 +71,3 @@ jobs:
     - name: terraform plan status
       if: steps.plan.outcome == 'failure'
       run: exit 1
-
-    - name: terraform apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply tfplan
