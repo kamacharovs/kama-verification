@@ -16,6 +16,8 @@ services.AddScoped<ITokenRepository, TokenRepository>()
     .AddJwtAuthentication(config)
     .AddAutoMapper(typeof(CustomerProfile).Assembly);
 
+services.AddHealthChecks();
+
 services.Configure<KamaVerificationDbOptions>(config.GetSection(KamaVerificationDbOptions.Section))
     .Configure<JwtOptions>(config.GetSection(JwtOptions.Section));
 
@@ -31,5 +33,6 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHealthChecks("/v1/health");
 app.MapControllers();
 app.Run();

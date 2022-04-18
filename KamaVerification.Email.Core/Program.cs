@@ -25,6 +25,8 @@ services.AddScoped<ITokenRepository, TokenRepository>()
         o.ApiKey = config[Keys.EmailApiKey];
     });
 
+services.AddHealthChecks();
+
 services.Configure<KamaVerificationDbOptions>(config.GetSection(KamaVerificationDbOptions.Section))
     .Configure<JwtOptions>(config.GetSection(JwtOptions.Section));
 
@@ -39,5 +41,6 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHealthChecks("/v1/health");
 app.MapControllers();
 app.Run();
