@@ -38,7 +38,7 @@ jobs:
       run: dotnet restore ${{ inputs.project_file }}
       
     - name: build
-      run: dotnet build -c ${{ inputs.configuration }} ${{inputs.project_file }} --no-restore
+      run: dotnet build -c ${{ inputs.configuration }} ${{ inputs.project_file }} --no-restore
 
     - name: test
       run: dotnet test -c ${{ inputs.configuration }} ${{ inputs.project_test_file }} -l trx -v normal --no-build
