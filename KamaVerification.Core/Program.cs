@@ -4,6 +4,7 @@ using KamaVerification.Data.Extensions;
 using KamaVerification.Services;
 using KamaVerification.Data.Mappers;
 using KamaVerification.Data.Options;
+using KamaVerification.Data.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -33,6 +34,7 @@ var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseKamaVerificationExceptionMiddleware();
 app.MapHealthChecks("/v1/health");
 app.MapControllers();
 app.Run();
