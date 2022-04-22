@@ -2,7 +2,7 @@
 
 namespace KamaVerification.Data.Exceptions
 {
-    internal class KamaVerificationNotFoundException : KamaVerificationFriendlyException
+    public class KamaVerificationNotFoundException : KamaVerificationFriendlyException
     {
         private const string DefaultMessage = "The requested item was not found.";
 

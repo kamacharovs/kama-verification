@@ -13,6 +13,7 @@ var config = builder.Configuration;
 services.AddScoped<ITokenRepository, TokenRepository>()
     .AddScoped<IVerificationRepository, VerificationRepository>()
     .AddScoped<ICustomerRepository, CustomerRepository>()
+    .AddFluentValidators()
     .AddDataConfiguration(config)
     .AddJwtAuthentication(config)
     .AddAutoMapper(typeof(CustomerProfile).Assembly);
