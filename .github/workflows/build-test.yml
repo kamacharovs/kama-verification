@@ -1,4 +1,4 @@
-name: build-core
+name: build-test
 
 on:
   push:
@@ -107,3 +107,19 @@ jobs:
       output_path: app/publish
       dockerfile: kama-verification-email-core.dockerfile
       tag: kama-verification-email:latest
+
+  build_data_migrations:
+    needs: terraform
+    uses: ./.github/workflows/build-base.yml
+    with:
+      configuration: debug
+      project_file: KamaVerification.Data.Migrations/KamaVerification.Data.Migrations.csproj
+
+  build_data_migrations_container:
+    needs: build_data_migrations
+    uses: ./.github/workflows/build-container-base.yml
+    with:
+      configuration: debug
+      project_file: KamaVerification.Data.Migrations/KamaVerification.Data.Migrations.csproj
+      dockerfile: kama-verification-data-migrations.dockerfile
+      tag: kama-verification-data-migrations:latest
