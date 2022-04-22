@@ -1,4 +1,4 @@
-name: terraform
+name: build-core
 
 on:
   push:
@@ -67,3 +67,43 @@ jobs:
             repo: context.repo.repo,
             body: output
           })
+          
+  build_core:
+    needs: terraform
+    uses: ./.github/workflows/build-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Core/KamaVerification.Core.csproj
+      project_test_file: KamaVerification.Tests/KamaVerification.Tests.csproj
+      output_path: app/publish
+
+  build_core_container:
+    needs: build_core
+    uses: ./.github/workflows/build-container-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Core/KamaVerification.Core.csproj
+      project_test_file: KamaVerification.Tests/KamaVerification.Tests.csproj
+      output_path: app/publish
+      dockerfile: kama-verification-core.dockerfile
+      tag: kama-verification:latest
+
+  build_email:
+    needs: terraform
+    uses: ./.github/workflows/build-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Email.Core/KamaVerification.Email.Core.csproj
+      project_test_file: KamaVerification.Email.Tests/KamaVerification.Email.Tests.csproj
+      output_path: app/publish
+
+  build_email_container:
+    needs: build_email
+    uses: ./.github/workflows/build-container-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Email.Core/KamaVerification.Email.Core.csproj
+      project_test_file: KamaVerification.Email.Tests/KamaVerification.Email.Tests.csproj
+      output_path: app/publish
+      dockerfile: kama-verification-email-core.dockerfile
+      tag: kama-verification-email:latest
