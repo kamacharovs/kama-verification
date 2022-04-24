@@ -61,6 +61,23 @@ namespace KamaVerification.Services
             return _tokenRepo.BuildToken(await GetAsync(request.ApiKey));
         }
 
+        public async Task<Customer> AddAsync(string name)
+        {
+            var isCustomerInDb = await _context.Customers
+                .FirstOrDefaultAsync(x => x.Name == name) is not null;
+
+            if (isCustomerInDb) throw new KamaVerificationFriendlyException(HttpStatusCode.BadRequest, "Customer with similar details already exists");
+            
+            var customer = new Customer { Name = name };
+
+            await _context.Customers.AddAsync(customer);
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Added customer with name={CustomerName}",
+                customer.Name);
+
+            return customer;
+        }
         public async Task<Customer> AddAsync(CustomerDto dto)
         {
             await _customerDtoValidator.ValidateAndThrowAsync(dto);
