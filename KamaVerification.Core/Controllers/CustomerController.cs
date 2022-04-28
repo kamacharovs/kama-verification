@@ -18,6 +18,14 @@ namespace KamaVerification.Core.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet]
+        [Route("{name}")]
+        public async Task<IActionResult> GetByNameAsync([FromRoute, Required] string name)
+        {
+            return Ok(await _repo.GetByNameAsync(name));
+        }
+
+        [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody, Required] CustomerDto dto)
         {

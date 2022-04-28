@@ -14,6 +14,7 @@ namespace KamaVerification.Services
     public interface ICustomerRepository
     {
         Task<Customer> GetAsync(int customerId);
+        Task<Customer> GetByNameAsync(string name);
         Task<Customer> GetAsync(string apiKey);
         Task<TokenResponse> GetTokenAsync(TokenRequest request);
         Task<Customer> AddAsync(CustomerDto dto);
@@ -46,7 +47,15 @@ namespace KamaVerification.Services
         {
             return await _context.Customers
                 .FirstOrDefaultAsync(x => x.CustomerId == customerId)
-                ?? throw new KamaVerificationNotFoundException();
+                ?? throw new KamaVerificationNotFoundException($"Customer with Id={customerId} was not found");
+        }
+
+        public async Task<Customer> GetByNameAsync(string name)
+        {
+            return await _context.Customers
+                .Include(x => x.ApiKey)
+                .FirstOrDefaultAsync(x => x.Name == name)
+                ?? throw new KamaVerificationNotFoundException($"Customer with Name={name} was not found");
         }
 
         public async Task<Customer> GetAsync(string apiKey)
