@@ -17,6 +17,7 @@ namespace KamaVerification.Services
         Task<Customer> GetByNameAsync(string name);
         Task<Customer> GetAsync(string apiKey);
         Task<TokenResponse> GetTokenAsync(TokenRequest request);
+        Task<Customer> AddAsync(string name);
         Task<Customer> AddAsync(CustomerDto dto);
         Task<bool> DeleteAsync(int customerId);
     }

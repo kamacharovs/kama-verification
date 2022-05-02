@@ -29,7 +29,8 @@ namespace KamaVerification.Core.Controllers
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody, Required] CustomerDto dto)
         {
-            return Ok(await _repo.AddAsync(dto));
+            if (dto.EmailConfig is null) return Ok(await _repo.AddAsync(dto.Name));
+            else return Ok(await _repo.AddAsync(dto));
         }
 
         [AllowAnonymous]
