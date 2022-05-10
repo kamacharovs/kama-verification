@@ -13,7 +13,9 @@ namespace KamaVerification.Services
 {
     public interface ICustomerRepository
     {
+        Task<Customer> GetAsync();
         Task<Customer> GetAsync(int customerId);
+        Task<Customer> GetAsync(Guid? publicKey);
         Task<Customer> GetByNameAsync(string name);
         Task<Customer> GetAsync(string apiKey);
         Task<TokenResponse> GetTokenAsync(TokenRequest request);
@@ -25,6 +27,7 @@ namespace KamaVerification.Services
     public class CustomerRepository : ICustomerRepository
     {
         private readonly ILogger<CustomerRepository> _logger;
+        private readonly ITenant _tenant;
         private readonly IMapper _mapper;
         private readonly ITokenRepository _tokenRepo;
         private readonly IValidator<CustomerDto> _customerDtoValidator;
@@ -32,16 +35,23 @@ namespace KamaVerification.Services
 
         public CustomerRepository(
             ILogger<CustomerRepository> logger,
+            ITenant tenant,
             IMapper mapper,
             ITokenRepository tokenRepo,
             IValidator<CustomerDto> customerDtoValidator,
             KamaVerificationDbContext context)
         {
             _logger = logger;
+            _tenant = tenant;
             _mapper = mapper;
             _tokenRepo = tokenRepo;
             _customerDtoValidator = customerDtoValidator;
             _context = context;
+        }
+
+        public async Task<Customer> GetAsync()
+        {
+            return await GetAsync(_tenant.CustomerPublicKey);
         }
 
         public async Task<Customer> GetAsync(int customerId)
@@ -49,6 +59,13 @@ namespace KamaVerification.Services
             return await _context.Customers
                 .FirstOrDefaultAsync(x => x.CustomerId == customerId)
                 ?? throw new KamaVerificationNotFoundException($"Customer with Id={customerId} was not found");
+        }
+        
+        public async Task<Customer> GetAsync(Guid? publicKey)
+        {
+            return await _context.Customers
+                .FirstOrDefaultAsync(x => x.PublicKey == publicKey)
+                ?? throw new KamaVerificationNotFoundException($"Customer with PublicKey={publicKey} was not found");
         }
 
         public async Task<Customer> GetByNameAsync(string name)

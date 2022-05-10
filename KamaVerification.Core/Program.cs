@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using KamaVerification.Data.Extensions;
 using KamaVerification.Services;
+using KamaVerification.Data.Dtos;
 using KamaVerification.Data.Mappers;
 using KamaVerification.Data.Options;
 using KamaVerification.Data.Middlewares;
@@ -13,6 +14,8 @@ var config = builder.Configuration;
 services.AddScoped<ITokenRepository, TokenRepository>()
     .AddScoped<IVerificationRepository, VerificationRepository>()
     .AddScoped<ICustomerRepository, CustomerRepository>()
+    .AddScoped<ITenant, Tenant>()
+    .AddHttpContextAccessor()
     .AddFluentValidators()
     .AddDataConfiguration(config)
     .AddJwtAuthentication(config)

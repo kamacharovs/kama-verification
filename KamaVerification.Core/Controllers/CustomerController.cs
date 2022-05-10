@@ -17,6 +17,14 @@ namespace KamaVerification.Core.Controllers
             _repo = repo;
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("me")]
+        public async Task<IActionResult> GetAsync()
+        {
+            return Ok(await _repo.GetAsync());
+        }
+
         [AllowAnonymous]
         [HttpGet]
         [Route("{name}")]
