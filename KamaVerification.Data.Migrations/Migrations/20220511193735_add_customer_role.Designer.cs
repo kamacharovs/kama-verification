@@ -3,6 +3,7 @@ using System;
 using KamaVerification.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KamaVerification.Data.Migrations.Migrations
 {
     [DbContext(typeof(KamaVerificationDbContext))]
-    partial class KamaVerificationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220511193735_add_customer_role")]
+    partial class add_customer_role
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
