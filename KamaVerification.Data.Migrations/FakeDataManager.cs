@@ -12,6 +12,21 @@ namespace KamaVerification.Data.Migrations
             _context = context;
         }
 
+        private IEnumerable<CustomerRole> GetCustomerRoles()
+        {
+            return new List<CustomerRole>
+            {
+                new CustomerRole
+                {
+                    RoleName = "Customer"
+                },
+                new CustomerRole
+                {
+                    RoleName = "Admin"
+                }
+            };
+        }
+
         private IEnumerable<Customer> GetCustomers()
         {
             return new List<Customer>
@@ -20,6 +35,7 @@ namespace KamaVerification.Data.Migrations
                 {
                     CustomerId = 1,
                     Name = "Wayne Enterprise",
+                    RoleName = "Customer",
                     ApiKey = new CustomerApiKey
                     {
                         CustomerId = 1,
@@ -38,6 +54,7 @@ namespace KamaVerification.Data.Migrations
                 {
                     CustomerId = 2,
                     Name = "Kama Verification Inc.",
+                    RoleName = "Admin",
                     ApiKey = new CustomerApiKey
                     {
                         CustomerId = 2,
@@ -57,6 +74,7 @@ namespace KamaVerification.Data.Migrations
 
         public async Task SeedDataAsync()
         {
+            await _context.CustomerRoles.AddRangeAsync(GetCustomerRoles());
             await _context.Customers.AddRangeAsync(GetCustomers());
 
             await _context.SaveChangesAsync();
@@ -64,6 +82,7 @@ namespace KamaVerification.Data.Migrations
 
         public void SeedData()
         {
+            _context.CustomerRoles.AddRange(GetCustomerRoles());
             _context.Customers.AddRange(GetCustomers());
 
             _context.SaveChanges();

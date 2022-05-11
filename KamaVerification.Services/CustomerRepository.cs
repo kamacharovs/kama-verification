@@ -57,6 +57,7 @@ namespace KamaVerification.Services
         public async Task<Customer> GetAsync(int customerId)
         {
             return await _context.Customers
+                .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.CustomerId == customerId)
                 ?? throw new KamaVerificationNotFoundException($"Customer with Id={customerId} was not found");
         }
@@ -64,6 +65,7 @@ namespace KamaVerification.Services
         public async Task<Customer> GetAsync(Guid? publicKey)
         {
             return await _context.Customers
+                .Include(x => x.Role)
                 .FirstOrDefaultAsync(x => x.PublicKey == publicKey)
                 ?? throw new KamaVerificationNotFoundException($"Customer with PublicKey={publicKey} was not found");
         }
@@ -71,6 +73,7 @@ namespace KamaVerification.Services
         public async Task<Customer> GetByNameAsync(string name)
         {
             return await _context.Customers
+                .Include(x => x.Role)
                 .Include(x => x.ApiKey)
                 .FirstOrDefaultAsync(x => x.Name == name)
                 ?? throw new KamaVerificationNotFoundException($"Customer with Name={name} was not found");
@@ -79,6 +82,7 @@ namespace KamaVerification.Services
         public async Task<Customer> GetAsync(string apiKey)
         {
             return await _context.Customers
+                .Include(x => x.Role)
                 .Include(x => x.ApiKey)
                 .FirstOrDefaultAsync(x => x.ApiKey.ApiKey == apiKey);
         }
