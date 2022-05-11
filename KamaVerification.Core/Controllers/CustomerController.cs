@@ -3,6 +3,7 @@ using KamaVerification.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
+using KamaVerification.Data.Constants;
 
 namespace KamaVerification.Core.Controllers
 {
@@ -25,7 +26,7 @@ namespace KamaVerification.Core.Controllers
             return Ok(await _repo.GetAsync());
         }
 
-        [Authorize]
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         [Route("{name}")]
         public async Task<IActionResult> GetByNameAsync([FromRoute, Required] string name)
