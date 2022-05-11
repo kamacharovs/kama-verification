@@ -28,10 +28,10 @@ namespace KamaVerification.Data.Dtos
     {
         private const string AuthHeader = "Authorization";
 
-        [JsonPropertyName("customer_name")]
+        [JsonPropertyName("name")]
         public string CustomerName { get; set; }
 
-        [JsonPropertyName("customer_public_key")]
+        [JsonPropertyName("public_key")]
         public Guid? CustomerPublicKey { get; set; }
 
         [JsonPropertyName("role")]
@@ -48,8 +48,8 @@ namespace KamaVerification.Data.Dtos
         {
             var tenant = httpContextAccessor.HttpContext?.User;
 
-            CustomerName = tenant?.FindFirst("customer_name")?.Value;
-            CustomerPublicKey = tenant?.FindFirst("customer_public_key")?.Value.ToNullableGuid();
+            CustomerName = tenant?.FindFirst("name")?.Value;
+            CustomerPublicKey = tenant?.FindFirst("public_key")?.Value.ToNullableGuid();
             Role = tenant?.FindFirst("role")?.Value;
 
             foreach (var claim in tenant.Claims)

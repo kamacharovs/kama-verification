@@ -18,11 +18,11 @@ namespace KamaVerification.Data.Migrations
             {
                 new CustomerRole
                 {
-                    RoleName = "Customer"
+                    RoleName = "customer"
                 },
                 new CustomerRole
                 {
-                    RoleName = "Admin"
+                    RoleName = "admin"
                 }
             };
         }
@@ -35,7 +35,7 @@ namespace KamaVerification.Data.Migrations
                 {
                     CustomerId = 1,
                     Name = "Wayne Enterprise",
-                    RoleName = "Customer",
+                    RoleName = "customer",
                     ApiKey = new CustomerApiKey
                     {
                         CustomerId = 1,
@@ -54,7 +54,7 @@ namespace KamaVerification.Data.Migrations
                 {
                     CustomerId = 2,
                     Name = "Kama Verification Inc.",
-                    RoleName = "Admin",
+                    RoleName = "admin",
                     ApiKey = new CustomerApiKey
                     {
                         CustomerId = 2,
