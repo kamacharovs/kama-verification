@@ -43,6 +43,7 @@ services.AddControllers()
 
 var app = builder.Build();
 
+app.UseCors(x => x.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHealthChecks("/v1/health");

@@ -36,7 +36,7 @@ services.AddMvcCore()
 
 var app = builder.Build();
 
-app.UseCors(x => x.WithOrigins("http://localhost:5158").AllowAnyHeader().AllowAnyMethod());
+app.UseCors(x => x.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseKamaVerificationExceptionMiddleware();
