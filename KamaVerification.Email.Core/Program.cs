@@ -4,6 +4,7 @@ using KamaVerification.Services;
 using KamaVerification.Data.Extensions;
 using KamaVerification.Data.Mappers;
 using KamaVerification.Data.Options;
+using KamaVerification.Data.Dtos;
 using KamaVerification.Email.Data;
 using KamaVerification.Email.Services;
 using SendGrid.Extensions.DependencyInjection;
@@ -17,6 +18,9 @@ services.AddScoped<ITokenRepository, TokenRepository>()
     .AddScoped<IVerificationRepository, VerificationRepository>()
     .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
     .AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
+    .AddScoped<ITenant, Tenant>()
+    .AddHttpContextAccessor()
+    .AddFluentValidators()
     .AddAutoMapper(typeof(CustomerProfile).Assembly)
     .AddDataConfiguration(config)
     .AddJwtAuthentication(config)
