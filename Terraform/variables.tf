@@ -17,3 +17,9 @@ variable "azure_client_secret" {
   type        = string
   description = "Azure service principal (app registration) client secret"
 }
+
+variable "env" {
+  type        = string
+  description = "Environment"
+  default     = "dev"
+}

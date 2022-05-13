@@ -1,0 +1,125 @@
+name: build-test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Terraform
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+
+    - name: setup terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.1.8
+        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+    - name: terraform format
+      id: fmt
+      run: terraform fmt -check
+
+    - name: terraform init
+      id: init
+      run: terraform init
+
+    - name: terraform validate
+      id: validate
+      run: terraform validate
+
+    - name: terraform plan
+      id: plan
+      run: terraform plan
+
+    - name: update pull request
+      uses: actions/github-script@0.9.0
+      if: github.event_name == 'pull_request'
+      env:
+        PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`
+
+          <details><summary>Show Plan</summary>
+
+          \`\`\`\n
+          ${process.env.PLAN}
+          \`\`\`
+
+          </details>
+
+          *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`*`;
+
+          github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: output
+          })
+          
+  build_core:
+    needs: terraform
+    uses: ./.github/workflows/build-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Core/KamaVerification.Core.csproj
+      project_test_file: KamaVerification.Tests/KamaVerification.Tests.csproj
+      output_path: app/publish
+
+  build_core_container:
+    needs: build_core
+    uses: ./.github/workflows/build-container-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Core/KamaVerification.Core.csproj
+      project_test_file: KamaVerification.Tests/KamaVerification.Tests.csproj
+      output_path: app/publish
+      dockerfile: kama-verification-core.dockerfile
+      tag: kama-verification:latest
+
+  build_email:
+    needs: terraform
+    uses: ./.github/workflows/build-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Email.Core/KamaVerification.Email.Core.csproj
+      project_test_file: KamaVerification.Email.Tests/KamaVerification.Email.Tests.csproj
+      output_path: app/publish
+
+  build_email_container:
+    needs: build_email
+    uses: ./.github/workflows/build-container-base.yml
+    with:
+      configuration: release
+      project_file: KamaVerification.Email.Core/KamaVerification.Email.Core.csproj
+      project_test_file: KamaVerification.Email.Tests/KamaVerification.Email.Tests.csproj
+      output_path: app/publish
+      dockerfile: kama-verification-email-core.dockerfile
+      tag: kama-verification-email:latest
+
+  build_data_migrations:
+    needs: terraform
+    uses: ./.github/workflows/build-base.yml
+    with:
+      configuration: debug
+      project_file: KamaVerification.Data.Migrations/KamaVerification.Data.Migrations.csproj
+
+  build_data_migrations_container:
+    needs: build_data_migrations
+    uses: ./.github/workflows/build-container-base.yml
+    with:
+      configuration: debug
+      project_file: KamaVerification.Data.Migrations/KamaVerification.Data.Migrations.csproj
+      dockerfile: kama-verification-data-migrations.dockerfile
+      tag: kama-verification-data-migrations:latest

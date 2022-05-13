@@ -34,8 +34,9 @@ namespace KamaVerification.Services
         {
             return new[]
             {
-                new Claim("customer_name", customer.Name.ToLowerInvariant()),
-                new Claim("customer_public_key", customer.PublicKey.ToString())
+                new Claim("name", customer.Name.ToLowerInvariant()),
+                new Claim("public_key", customer.PublicKey.ToString()),
+                new Claim("role", customer.RoleName.ToLowerInvariant())
             };
         }
 

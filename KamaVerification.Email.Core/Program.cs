@@ -4,6 +4,7 @@ using KamaVerification.Services;
 using KamaVerification.Data.Extensions;
 using KamaVerification.Data.Mappers;
 using KamaVerification.Data.Options;
+using KamaVerification.Data.Dtos;
 using KamaVerification.Email.Data;
 using KamaVerification.Email.Services;
 using SendGrid.Extensions.DependencyInjection;
@@ -17,9 +18,12 @@ services.AddScoped<ITokenRepository, TokenRepository>()
     .AddScoped<IVerificationRepository, VerificationRepository>()
     .AddScoped<IEmailTemplateRepository, EmailTemplateRepository>()
     .AddScoped<IEmailVerificationRepository, EmailVerificationRepository>()
-    .AddAutoMapper(typeof(CustomerProfile).Assembly)
+    .AddScoped<ITenant, Tenant>()
+    .AddHttpContextAccessor()
+    .AddFluentValidators()
     .AddDataConfiguration(config)
     .AddJwtAuthentication(config)
+    .AddAutoMapper(typeof(CustomerProfile).Assembly)
     .AddSendGrid(o =>
     {
         o.ApiKey = config[Keys.EmailApiKey];
@@ -39,6 +43,7 @@ services.AddControllers()
 
 var app = builder.Build();
 
+app.UseCors(x => x.WithOrigins("*").AllowAnyHeader().AllowAnyMethod());
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHealthChecks("/v1/health");

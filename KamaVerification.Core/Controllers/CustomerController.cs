@@ -3,6 +3,7 @@ using KamaVerification.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System.ComponentModel.DataAnnotations;
+using KamaVerification.Data.Constants;
 
 namespace KamaVerification.Core.Controllers
 {
@@ -17,11 +18,28 @@ namespace KamaVerification.Core.Controllers
             _repo = repo;
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("me")]
+        public async Task<IActionResult> GetAsync()
+        {
+            return Ok(await _repo.GetAsync());
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpGet]
+        [Route("{name}")]
+        public async Task<IActionResult> GetByNameAsync([FromRoute, Required] string name)
+        {
+            return Ok(await _repo.GetByNameAsync(name));
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> AddAsync([FromBody, Required] CustomerDto dto)
         {
-            return Ok(await _repo.AddAsync(dto));
+            if (dto.EmailConfig is null) return Ok(await _repo.AddAsync(dto.Name));
+            else return Ok(await _repo.AddAsync(dto));
         }
 
         [AllowAnonymous]

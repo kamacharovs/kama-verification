@@ -6,7 +6,7 @@ using System.Configuration;
 
 namespace KamaVerification.Data.Extensions
 {
-    public static class KamaVerificationOptionsExtensions
+    public static partial class KamaVerificationOptionsExtensions
     {
         public static IConfigurationSection GetConfigSection(this IConfiguration configuration, string sectionName)
         {

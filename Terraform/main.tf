@@ -32,3 +32,8 @@ provider "azurerm" {
 locals {
   location = "eastus"
 }
+
+resource "azurerm_resource_group" "kama_verification_rg" {
+  name     = "kama-verification-rg"
+  location = local.location
+}
