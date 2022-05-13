@@ -21,9 +21,9 @@ services.AddScoped<ITokenRepository, TokenRepository>()
     .AddScoped<ITenant, Tenant>()
     .AddHttpContextAccessor()
     .AddFluentValidators()
-    .AddAutoMapper(typeof(CustomerProfile).Assembly)
     .AddDataConfiguration(config)
     .AddJwtAuthentication(config)
+    .AddAutoMapper(typeof(CustomerProfile).Assembly)
     .AddSendGrid(o =>
     {
         o.ApiKey = config[Keys.EmailApiKey];
